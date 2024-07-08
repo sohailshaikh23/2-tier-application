@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+  flask:
+    image: sohailshaikh23/flask
+    container_name: flask
+    ports:
+      - "5000:5000"
+    networks:
+      - 2-tier
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_DB: mydb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - 2-tier
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: admin
+    volumes:
+      - ./message.sql:/docker-entrypoint-initdb.d/message.sql
+      - mysql-data:/var/lib/mysql
+
+
+volumes:
+  mysql-data:
+networks:
+  2-tier:

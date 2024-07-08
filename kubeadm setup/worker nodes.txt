@@ -1,0 +1,36 @@
+# RUN THIS CODE
+
+
+#1  using 'sudo su' is not a good practice.
+sudo apt update -y
+sudo apt-get install -y apt-transport-https ca-certificates curl
+sudo apt install docker.io -y
+
+sudo systemctl enable --now docker # enable and start in single command.
+
+# Adding GPG keys.
+curl -fsSL "https://packages.cloud.google.com/apt/doc/apt-key.gpg" | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/kubernetes-archive-keyring.gpg
+
+# Add the repository to the sourcelist.
+echo 'deb https://packages.cloud.google.com/apt kubernetes-xenial main' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt update -y
+sudo apt install kubeadm=1.20.0-00 kubectl=1.20.0-00 kubelet=1.20.0-00 -y
+
+
+
+
+
+#2 Run this command on worker node
+
+sudo kubeadm reset pre-flight checks
+
+
+#2 paste you TOKEN  with "--v=5"
+
+kubeadm join 172.31.10.46:6443 --token ojdooc.3cnx5dsji86dr3la \
+    --discovery-token-ca-cert-hash sha256:955b890375c0056fa268d21095795f2c3d5aa0a4aef17327c3e247cee455791f --v=5
+
+
+#Run commands and check
+kubectl get nodes

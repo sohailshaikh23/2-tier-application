@@ -1,8 +1,8 @@
 version: '3.3'
 
-services:
-  flask:
-    image: sohailshaikh23/flask
+services:  #In services we mention containers
+  flask:   #flask container
+    image: sohailshaikh23/2-tier_flask:latest
     container_name: flask
     ports:
       - "5000:5000"
@@ -14,7 +14,7 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
 
-  mysql:
+  mysql:   #mysql container 
     image: mysql:5.7
     container_name: mysql
     ports:
@@ -27,9 +27,8 @@ services:
       MYSQL_PASSWORD: admin
       MYSQL_ROOT_PASSWORD: admin
     volumes:
-      - ./message.sql:/docker-entrypoint-initdb.d/message.sql
-      - mysql-data:/var/lib/mysql
-
+      - ./message.sql:/docker-entrypoint-initdb.d/message.sql   #bind mount with host machine directory
+      - mysql-data:/var/lib/mysql                           #docker volume
 
 volumes:
   mysql-data:

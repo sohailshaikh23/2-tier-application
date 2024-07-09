@@ -1,22 +1,22 @@
-apiVersion: apps/v1
+apiVersion: apps/v1   #AKM section
 kind: Deployment
 metadata:
   name: mysql
   labels:
     app: mysql
-spec:
+spec:                #deployment spec section
   replicas: 1
   selector:
     matchLabels:
       app: mysql
-  template:
+  template:          #pod template starts
     metadata:
       labels:
         app: mysql
-    spec:
+    spec:            #pod spec section
       containers:
         - name: mysql
-          image: mysql:latest
+          image: sohailshaikh23/2-tier_mysql:latest
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
